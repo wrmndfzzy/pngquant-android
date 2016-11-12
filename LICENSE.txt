@@ -1,6 +1,7 @@
 pngquant-android:
 
    © 2015 by Nicolas Dahlquist.
+   © 2016 by Joe Maples.
 
    All rights reserved.
 

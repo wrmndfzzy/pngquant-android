@@ -1,6 +1,4 @@
 ## pngquant-android
-[![Circle CI](https://circleci.com/gh/ndahlquist/pngquant-android.svg?style=svg)](https://circleci.com/gh/ndahlquist/pngquant-android)
-[![Download](https://api.bintray.com/packages/ndahlquist/maven/pngquant-android/images/download.svg) ](https://bintray.com/ndahlquist/maven/pngquant-android/_latestVersion)
 
 [pngquant](https://pngquant.org/) with basic Java bindings for Android.
 ![pngquant](https://pngquant.org/pngquant-logo.png)
