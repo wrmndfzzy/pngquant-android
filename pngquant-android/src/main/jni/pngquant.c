@@ -67,8 +67,10 @@ extern int optind, opterr;
 
 static pngquant_error prepare_output_image(liq_result *result, liq_image *input_image, png8_image *output_image);
 static void set_palette(liq_result *result, png8_image *output_image);
-static pngquant_error read_image(liq_attr *options, const char *filename, int using_stdin, png24_image *input_image_p, liq_image **liq_image_p, bool keep_input_pixels, bool verbose);
-static pngquant_error write_image(png8_image *output_image, png24_image *output_image24, const char *outname, struct pngquant_options *options);
+static pngquant_error read_image(liq_attr *options, const char *filename, int using_stdin, png24_image *input_image_p, liq_image 
+**liq_image_p, bool keep_input_pixels, bool verbose);
+static pngquant_error write_image(png8_image *output_image, png24_image *output_image24, const char *outname, struct pngquant_options 
+*options);
 static char *add_filename_extension(const char *filename, const char *newext);
 static bool file_exists(const char *outname);
 
@@ -159,9 +161,10 @@ pngquant_error pngquant_file(const char *filename, const char *outname, struct p
 
     liq_image *input_image = NULL;
     png24_image input_image_rwpng = {};
-    bool keep_input_pixels = options->skip_if_larger || (options->using_stdout && options->min_quality_limit); // original may need to be output to stdout
+    bool keep_input_pixels = options->skip_if_larger || (options->using_stdout && options->min_quality_limit); // original may need to be 
     if (SUCCESS == retval) {
-        retval = read_image(options->liq, filename, options->using_stdin, &input_image_rwpng, &input_image, keep_input_pixels, options->verbose);
+        retval = read_image(options->liq, filename, options->using_stdin, &input_image_rwpng, &input_image, keep_input_pixels, 
+options->verbose);
     }
 
     int quality_percent = 90; // quality on 0-100 scale, updated upon successful remap
@@ -249,16 +252,10 @@ static void set_palette(liq_result *result, png8_image *output_image)
 {
     const liq_palette *palette = liq_get_palette(result);
 
-    // tRNS, etc.
     output_image->num_palette = palette->count;
-    output_image->num_trans = 0;
     for(unsigned int i=0; i < palette->count; i++) {
         liq_color px = palette->entries[i];
-        if (px.a < 255) {
-            output_image->num_trans = i+1;
-        }
-        output_image->palette[i] = (png_color){.red=px.r, .green=px.g, .blue=px.b};
-        output_image->trans[i] = px.a;
+        output_image->palette[i] = (rwpng_rgba){.r=px.r, .g=px.g, .b=px.b, .a=px.a};
     }
 }
 
@@ -332,7 +329,8 @@ static bool replace_file(const char *from, const char *to, const bool force) {
     return (0 == rename(from, to));
 }
 
-static pngquant_error write_image(png8_image *output_image, png24_image *output_image24, const char *outname, struct pngquant_options *options)
+static pngquant_error write_image(png8_image *output_image, png24_image *output_image24, const char *outname, struct pngquant_options 
+*options)
 {
     FILE *outfile;
     char *tempname = NULL;
@@ -397,7 +395,8 @@ static pngquant_error write_image(png8_image *output_image, png24_image *output_
     return retval;
 }
 
-static pngquant_error read_image(liq_attr *options, const char *filename, int using_stdin, png24_image *input_image_p, liq_image **liq_image_p, bool keep_input_pixels, bool verbose)
+static pngquant_error read_image(liq_attr *options, const char *filename, int using_stdin, png24_image *input_image_p, liq_image 
+**liq_image_p, bool keep_input_pixels, bool verbose)
 {
     FILE *infile;
 
@@ -424,7 +423,8 @@ static pngquant_error read_image(liq_attr *options, const char *filename, int us
         return retval;
     }
 
-    *liq_image_p = liq_image_create_rgba_rows(options, (void**)input_image_p->row_pointers, input_image_p->width, input_image_p->height, input_image_p->gamma);
+    *liq_image_p = liq_image_create_rgba_rows(options, (void**)input_image_p->row_pointers, input_image_p->width, input_image_p->height, 
+input_image_p->gamma);
 
     if (!*liq_image_p) {
         return OUT_OF_MEMORY_ERROR;
@@ -465,12 +465,7 @@ static pngquant_error prepare_output_image(liq_result *result, liq_image *input_
     const liq_palette *palette = liq_get_palette(result);
     // tRNS, etc.
     output_image->num_palette = palette->count;
-    output_image->num_trans = 0;
-    for(unsigned int i=0; i < palette->count; i++) {
-        if (palette->entries[i].a < 255) {
-            output_image->num_trans = i+1;
-        }
-    }
 
     return SUCCESS;
 }
+
