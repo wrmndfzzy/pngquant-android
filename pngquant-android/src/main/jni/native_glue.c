@@ -21,7 +21,8 @@ static void log_callback(const liq_attr * attr, const char * msg, void * user_in
     LOGI("%s" ,msg);
 }
 
-JNIEXPORT jboolean JNICALL Java_com_nicdahlquist_pngquant_LibPngQuant_nativePngQuantFile(JNIEnv * env, jobject obj, jstring jInFilename, jstring jOutFilename) {
+JNIEXPORT jboolean JNICALL Java_com_wrmndfzzy_pngquant_LibPngQuant_nativePngQuantFile(JNIEnv * env, jobject obj, jstring jInFilename, jstring 
+jOutFilename) {
     const char * inFilename = (*env)->GetStringUTFChars(env, jInFilename, 0);
     const char * outFilename = (*env)->GetStringUTFChars(env, jOutFilename, 0);
 

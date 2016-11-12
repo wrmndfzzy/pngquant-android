@@ -1,4 +1,4 @@
-package com.nicdahlquist.pngquant;
+package com.wrmndfzzy.pngquant;
 
 import java.io.File;
 

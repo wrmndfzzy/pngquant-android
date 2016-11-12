@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import com.nicdahlquist.pngquant.LibPngQuant;
+import com.wrmndfzzy.pngquant.LibPngQuant;
 
 public class PngQuantTest {
 
