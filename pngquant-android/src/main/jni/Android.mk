@@ -19,16 +19,14 @@ LOCAL_SRC_FILES := \
 	libpng-android/jni/pngwio.c \
 	libpng-android/jni/pngwrite.c \
 	libpng-android/jni/pngwtran.c \
-	libpng-android/jni/pngwutil.c
-
-LOCAL_SRC_FILES_arm := \
+	libpng-android/jni/pngwutil.c \
 	libpng-android/jni/arm/arm_init.c \
 	libpng-android/jni/arm/filter_neon.S \
 	libpng-android/jni/arm/filter_neon_intrinsics.c
 
 LOCAL_CFLAGS := -std=gnu89 -Wno-unused-parameter -O3 -fopenmp -DOPENMP
 LOCAL_CFLAGS_arm := -DPNG_ARM_NEON_OPT=2
-LOCAL_CFLAGS_arm64 := -DPNG_ARM_NEON_OPT=2
+LOCAL_CFLAGS_arm64-v8a := -DPNG_ARM_NEON_OPT=2
 LOCAL_EXPORT_LDLIBS := -lz -lgomp
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/libpng-android/jni/.
 
