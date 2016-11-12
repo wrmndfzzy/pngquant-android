@@ -188,9 +188,9 @@ options->verbose);
         }
 
         // when using image as source of a fixed palette the palette is extracted using regular quantization
-        liq_result *remap = liq_quantize_image(options->liq, options->fixed_palette_image ? options->fixed_palette_image : input_image);
-
-        if (remap) {
+        liq_result *remap;
+        liq_error remap_error = liq_image_quantize(options->fixed_palette_image ? options->fixed_palette_image : input_image, options->liq, &remap);
+        if (LIQ_OK == remap_error) {
             liq_set_output_gamma(remap, 0.45455); // fixed gamma ~2.2 for the web. PNG can't store exact 1/2.2
             liq_set_dithering_level(remap, options->floyd);
 
@@ -209,8 +209,10 @@ options->verbose);
                 }
             }
             liq_result_destroy(remap);
-        } else {
+        } else if (LIQ_QUALITY_TOO_LOW == remap_error) {
             retval = TOO_LOW_QUALITY;
+        } else {
+            retval = INVALID_ARGUMENT; // dunno
         }
     }
 
