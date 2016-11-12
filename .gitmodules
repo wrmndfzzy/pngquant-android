@@ -3,4 +3,4 @@
 	url = https://github.com/pornel/pngquant.git
 [submodule "pngquant-android/src/main/jni/libpng-android"]
 	path = pngquant-android/src/main/jni/libpng-android
-	url = https://github.com/julienr/libpng-android.git
+	url = https://github.com/wrmndfzzy/libpng-android.git
