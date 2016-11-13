@@ -31,6 +31,7 @@ jOutFilename) {
     };
     options.liq = liq_attr_create();
 
+    options.force = true;
     options.verbose = true;
     liq_set_log_callback(options.liq, log_callback, NULL);
     options.log_callback = log_callback;
@@ -40,5 +41,6 @@ jOutFilename) {
     (*env)->ReleaseStringUTFChars(env, jInFilename, inFilename);
     (*env)->ReleaseStringUTFChars(env, jOutFilename, outFilename);
 
+    LOGI("%s" ,"complete");
     return true;
 }
