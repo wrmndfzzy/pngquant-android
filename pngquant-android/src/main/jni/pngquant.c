@@ -413,7 +413,7 @@ static pngquant_error read_image(liq_attr *options, const char *filename, int us
     pngquant_error retval;
     #pragma omp critical (libpng)
     {
-        retval = rwpng_read_image24(infile, input_image_p, verbose);
+        retval = rwpng_read_image24(infile, input_image_p, false, verbose);
     }
 
     if (!using_stdin) {
