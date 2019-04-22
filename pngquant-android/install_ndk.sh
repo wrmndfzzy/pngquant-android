@@ -3,22 +3,21 @@
 
 set -e
 
-if [ ! -d android-ndk-r10e ]
+if [ ! -d android-ndk-r19c ]
 then
     echo "Creating a local install of the Android NDK."
     if [ "$(uname)" == "Darwin" ]
     then
-        wget http://dl.google.com/android/ndk/android-ndk-r10e-darwin-x86_64.bin -O ndk.bin
+        wget https://dl.google.com/android/repository/android-ndk-r19c-darwin-x86_64.zip -O ndk.zip
     else
         if [ "$(uname -m)" == "x86_64" ]
         then
-            wget http://dl.google.com/android/ndk/android-ndk-r10e-linux-x86_64.bin -O ndk.bin
+            wget https://dl.google.com/android/repository/android-ndk-r19c-linux-x86_64.zip -O ndk.zip
         else
-            wget http://dl.google.com/android/ndk/android-ndk-r10e-linux-x86.bin -O ndk.bin
+            wget https://dl.google.com/android/repository/android-ndk-r19c-linux-x86.zip -O ndk.zip
         fi
     fi
 
-    chmod a+x ndk.bin
-    ./ndk.bin -y | grep -v Extracting
-    rm ndk.bin
+    unzip ndk.zip | grep -v Extracting
+    rm ndk.zip
 fi
